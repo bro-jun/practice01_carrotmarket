@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class DetailContentView extends StatefulWidget {
@@ -20,23 +21,55 @@ class _DetailContentViewState extends State<DetailContentView> {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: Icon(Icons.arrow_back, color: Colors.white),
+      ),
       actions: [
-        IconButton(onPressed: () {}, icon: Icon(Icons.share)),
-        IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+        IconButton(
+            onPressed: () {}, icon: Icon(Icons.share, color: Colors.white)),
+        IconButton(
+            onPressed: () {}, icon: Icon(Icons.more_vert, color: Colors.white)),
       ],
     );
   }
 
   Widget _bodyWidget() {
     return Container(
-      child: Hero(
-        tag: widget.data["cid"].toString(),
-        child: Image.asset(
-          widget.data["image"].toString(),
-          width: size.width,
-          fit: BoxFit.fill,
-        ),
+      child: Column(
+        children: [
+          Hero(
+            tag: widget.data["cid"].toString(),
+            child: CarouselSlider(
+              items: List.generate(5, (index) {
+                return Image.asset(
+                  widget.data["image"].toString(),
+                  width: size.width,
+                  fit: BoxFit.fill,
+                );
+              }),
+              options: CarouselOptions(
+                  height: size.width,
+                  initialPage: 0,
+                  enableInfiniteScroll: false,
+                  viewportFraction: 1,
+                  onPageChanged: (index, reason) {
+                    print(index);
+                  }),
+            ),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget _bottomBarWidget() {
+    return Container(
+      width: size.width,
+      height: 55,
+      color: Colors.red,
     );
   }
 
@@ -46,6 +79,7 @@ class _DetailContentViewState extends State<DetailContentView> {
       extendBodyBehindAppBar: true,
       appBar: _appbarWidget(),
       body: _bodyWidget(),
+      bottomNavigationBar: _bottomBarWidget(),
     );
   }
 }

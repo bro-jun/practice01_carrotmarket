@@ -1,6 +1,7 @@
 # carrot_market_sample
 
-A new Flutter project.
+당근마켓 클론코딩 연습.
+유튜브 개발하는남자 강의 참조함.ㄴ
 
 ## Getting Started
 
